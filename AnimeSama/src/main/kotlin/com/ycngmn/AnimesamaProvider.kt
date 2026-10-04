@@ -263,6 +263,7 @@ class AnimesamaProvider : MainAPI() {
                     url.contains("oneupload.to") -> "Oneupload"
                     url.contains("sendvid.com") -> "Sendvid"
                     url.contains("vk.com") -> "Vk"
+                    url.contains("earnvids.com") -> "Earnvids"
 
 
                     else -> "Other"
