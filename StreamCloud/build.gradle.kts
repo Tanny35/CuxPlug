@@ -7,7 +7,7 @@ cloudstream {
 
     description = "Stream Filme Kostenlos Online anschauen Deutsch."
     language = "de"
-    authors = listOf("ycngmn")
+    authors = listOf("tanny35")
 
     /**
      * Status int as the following:

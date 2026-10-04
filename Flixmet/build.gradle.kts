@@ -7,7 +7,7 @@ cloudstream {
 
     description = "Watch any movie worldwide including Hollywood, Bollywood and Bengali. PREFER DOWNLOAD THAN STREAMING!"
     language = "bn"
-    authors = listOf("ycngmn")
+    authors = listOf("tanny35")
 
     /**
      * Status int as the following:

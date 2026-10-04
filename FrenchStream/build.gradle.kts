@@ -5,7 +5,7 @@ cloudstream {
 
     description = "French Stream est un site qui va récupèrer les films et séries sur des plateformes comme Disney+, Netflix, Amazon Prime Video, HBO, Apple TV , Wakanim, Viki... et vous les proposer Gratuitement!"
     language = "fr"
-    authors = listOf("ycngmn")
+    authors = listOf("tanny35")
 
     status = 1 // 0: Down | 1: Ok
     tvTypes = listOf("Movie","TvSeries", "Anime")

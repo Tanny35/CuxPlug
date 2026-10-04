@@ -6,7 +6,7 @@ cloudstream {
 
     description = "Anizone.to is a website with no about us section but hey, there are anime."
     language = "en"
-    authors = listOf("ycngmn")
+    authors = listOf("tanny35")
 
     /**
      * Status int as the following:

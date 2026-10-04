@@ -282,6 +282,20 @@ class AnimesamaProvider : MainAPI() {
                 .map { it.value.trim('\'', '"') }
                 .toList()
 
+            // episodes.js holds one list per player (var eps1 = [...]; var eps2 = [...]),
+            // each with one link per episode. Keep that structure whatever the hosts are.
+            val playerLists = Regex("""var\s+eps\d+\s*=\s*\[(.*?)]\s*;""", RegexOption.DOT_MATCHES_ALL)
+                .findAll(rawLinks)
+                .map { list ->
+                    list.groupValues[1].lines()
+                        .filterNot { it.trim().startsWith("//") }
+                        .flatMap { line -> reURL.findAll(line).map { it.value.trim('\'', '"') }.toList() }
+                }
+                .filter { it.isNotEmpty() }
+                .toList()
+            if (playerLists.isNotEmpty())
+                return playerLists.withIndex().associate { (i, links) -> "eps${i + 1}" to links }
+
             return urls.groupBy { url ->
                 when {
                     // here I listed the providers I crossed in AS.

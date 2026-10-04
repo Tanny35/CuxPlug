@@ -7,7 +7,7 @@ cloudstream {
 
     description = "Watch32 is a Free Movies streaming site with over 10000 movies and TV-Series."
     language = "en"
-    authors = listOf("ycngmn")
+    authors = listOf("tanny35")
 
     /**
      * Status int as the following:

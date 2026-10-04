@@ -7,7 +7,7 @@ cloudstream {
 
     description = "انمي لوكس - AnimeLuxe موقع مشاهدة الانمي مترجم اون لاين"
     language = "ar"
-    authors = listOf("ycngmn")
+    authors = listOf("tanny35")
 
     /**
      * Status int as the following:
