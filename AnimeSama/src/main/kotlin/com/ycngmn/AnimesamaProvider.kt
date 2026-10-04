@@ -67,12 +67,11 @@ class AnimesamaProvider : MainAPI() {
 
 
     private fun toResult(post: Element): SearchResponse {
-        var title = post.selectFirst("h1")?.text() ?: ""
-        if (title == "")
-            title = post.selectFirst("h3")?.text() ?: ""
-        var url = post.selectFirst("a")?.attr("href") ?: ""
-        url = if (url.split("/").size > 5) url.split("/").take(5).joinToString("/")
-        else url
+        val title = post.selectFirst(".card-title, .asn-search-result-title, h1, h2, h3")?.text() ?: ""
+        val href = post.selectFirst("a")?.attr("href") ?: ""
+        // Keep only the anime page: /catalogue/<slug>, whether href is relative or absolute.
+        val slug = Regex("""/catalogue/([^/?#]+)""").find(href)?.groupValues?.get(1)
+        val url = if (slug != null) "$mainUrl/catalogue/$slug" else href
         return newAnimeSearchResponse(title, url, TvType.Anime) {
             this.posterUrl = post.selectFirst("img")
                 ?.attr("src")
@@ -93,15 +92,14 @@ class AnimesamaProvider : MainAPI() {
 
 
         val doc = app.get(url, cacheTime = 60).document
-        val title = doc.selectFirst("h4#titreOeuvre")?.text()
+        val title = doc.selectFirst(".oeuvre-right h1, h4#titreOeuvre")?.text()
             ?: throw NotImplementedError("Unable to find title")
         val otherTitles =
-            doc.selectFirst("#titreAlter")?.text()?.split(",")?.map { it.trim() } ?: listOf()
-        val image = doc.selectFirst("#coverOeuvre")?.attr("src")
-        val tags =
-            doc.selectFirst("a.text-sm.text-gray-300.mt-2")?.text()?.split(",")?.map { it.trim() }
-                ?: listOf()
-        val synopsis = doc.selectFirst("p.text-sm.text-gray-400.mt-2")?.text() ?: ""
+            doc.selectFirst("#titreAlter")?.text()?.split("/")?.map { it.trim() } ?: listOf()
+        val image = doc.selectFirst("meta[property=og:image]")?.attr("content")
+            ?: doc.selectFirst("#coverOeuvre")?.attr("src")
+        val tags = doc.select(".genre-pill").map { it.text().trim() }
+        val synopsis = doc.selectFirst("#synopsisText")?.text() ?: ""
 
         // Pair of ( seasonName : href )
         val rawSeasonData =
