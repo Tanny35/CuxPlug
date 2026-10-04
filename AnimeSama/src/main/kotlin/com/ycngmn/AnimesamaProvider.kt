@@ -26,7 +26,7 @@ import org.jsoup.nodes.Element
 
 class AnimesamaProvider : MainAPI() {
 
-    override var mainUrl = "https://anime-sama.si"
+    override var mainUrl = "https://anime-sama.to"
     override var name = "Anime-sama"
     override val supportedTypes = setOf(
         TvType.Anime,
@@ -234,7 +234,7 @@ class AnimesamaProvider : MainAPI() {
      * @param streamPage The AnimeSama URL to scrape from.
      * Example:
      * ```
-     * https://anime-sama.si/catalogue/anime-name/saison0/vostfr/
+     * https://anime-sama.to/catalogue/anime-name/saison0/vostfr/
      * ```
      * @return A map containing pairs of sources and their corresponding lists of stream links,
      *         or an empty list if no match is found.
@@ -260,7 +260,7 @@ class AnimesamaProvider : MainAPI() {
                 when {
                     // here I listed the providers I crossed in AS.
 
-                    url.contains("sibnet.ru") -> "Sibnet"
+                    // Provider disabled: url.contains("sibnet.ru") -> "Sibnet"
                     url.contains("vidmoly.to") -> "Vidmoly"
                     url.contains("oneupload.to") -> "Oneupload"
                     url.contains("sendvid.com") -> "Sendvid"

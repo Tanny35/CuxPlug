@@ -1,9 +1,9 @@
 {
   "name": "CuxPlug",
-  "iconUrl": "https://raw.githubusercontent.com/ycngmn/CuxPlug/refs/heads/main/icons/repo.jpg",
+  "iconUrl": "https://raw.githubusercontent.com/tanny35/CuxPlug/refs/heads/main/icons/repo.jpg",
   "description": "Plugins that sux",
   "manifestVersion": 1,
   "pluginLists": [
-    "https://raw.githubusercontent.com/ycngmn/CuxPlug/refs/heads/builds/plugins.json"
+    "https://raw.githubusercontent.com/tanny35/CuxPlug/refs/heads/builds/plugins.json"
   ]
 }

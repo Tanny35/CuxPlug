@@ -6,7 +6,7 @@ cloudstream {
     // All of these properties are optional, you can safely remove them
 
     description = "Anime-Sama est un site de référencement et de catalogage, créé par des passionnés de l’animation et du divertissement APAC."
-    authors = listOf("ycngmn")
+    authors = listOf("tanny35")
 
     /**
     * Status int as the following:
