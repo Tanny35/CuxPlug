@@ -14,14 +14,17 @@ import com.lagradost.cloudstream3.TvType
 import com.lagradost.cloudstream3.addEpisodes
 import com.lagradost.cloudstream3.addSeasonNames
 import com.lagradost.cloudstream3.app
+import com.lagradost.cloudstream3.extractors.Voe
 import com.lagradost.cloudstream3.mainPageOf
 import com.lagradost.cloudstream3.newAnimeLoadResponse
 import com.lagradost.cloudstream3.newAnimeSearchResponse
 import com.lagradost.cloudstream3.newEpisode
 import com.lagradost.cloudstream3.newHomePageResponse
 import com.lagradost.cloudstream3.utils.ExtractorLink
+import com.lagradost.cloudstream3.utils.M3u8Helper
 import com.lagradost.cloudstream3.utils.loadExtractor
 import org.jsoup.nodes.Element
+import kotlin.coroutines.cancellation.CancellationException
 
 
 class AnimesamaProvider : MainAPI() {
@@ -220,10 +223,35 @@ class AnimesamaProvider : MainAPI() {
 
         val links = data.removePrefix(" ").split(" ")
 
-        for (link in links)
-            loadExtractor(link, subtitleCallback, callback)
+        for (link in links) {
+            if (loadExtractor(link, subtitleCallback, callback)) continue
+
+            // Unknown host: these players rotate domains, so guess the player from the link shape.
+            val host = Regex("""^https?://[^/]+""").find(link)?.value ?: continue
+            try {
+                when {
+                    // VOE-like: https://<random-domain>/e/<id>
+                    "/e/" in link -> VoeMirror(host).getUrl(link, "$mainUrl/", subtitleCallback, callback)
+                    // JWPlayer-like: https://<domain>/embed-<id>.html
+                    Regex("""/embed-[^/]+\.html""").containsMatchIn(link) -> jwPlayerSources(link, host, callback)
+                }
+            } catch (e: CancellationException) {
+                throw e
+            } catch (_: Exception) {
+                // this host failed, try the next link
+            }
+        }
 
         return true
+    }
+
+    private class VoeMirror(override val mainUrl: String) : Voe()
+
+    private suspend fun jwPlayerSources(url: String, host: String, callback: (ExtractorLink) -> Unit) {
+        val page = app.get(url, referer = "$mainUrl/").text
+        val file = Regex("""sources:\s*\[\s*\{\s*file:\s*['"]([^'"]+)['"]""")
+            .find(page)?.groupValues?.get(1) ?: return
+        M3u8Helper.generateM3u8(host.substringAfter("://"), file, "$host/").forEach(callback)
     }
 
     /**
