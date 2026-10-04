@@ -19,7 +19,6 @@ cloudstream {
 
     tvTypes = listOf("Anime")
 
-    requiresResources = true
     language = "fr"
 
 
