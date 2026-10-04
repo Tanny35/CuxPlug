@@ -1,0 +1,82 @@
+{
+  "formatVersion" : "1.1",
+  "component" : {
+    "group" : "com.github.recloudstream",
+    "module" : "gradle",
+    "version" : "master-SNAPSHOT",
+    "attributes" : {
+      "org.gradle.status" : "release"
+    }
+  },
+  "createdBy" : {
+    "gradle" : {
+      "version" : "9.5.0"
+    }
+  },
+  "variants" : [ {
+    "name" : "apiElements",
+    "attributes" : {
+      "org.gradle.category" : "library",
+      "org.gradle.dependency.bundling" : "external",
+      "org.gradle.jvm.environment" : "standard-jvm",
+      "org.gradle.jvm.version" : "11",
+      "org.gradle.libraryelements" : "jar",
+      "org.gradle.usage" : "java-api",
+      "org.jetbrains.kotlin.platform.type" : "jvm"
+    },
+    "files" : [ {
+      "name" : "gradle-master-SNAPSHOT.jar",
+      "url" : "gradle-master-SNAPSHOT.jar",
+      "size" : 95126,
+      "sha512" : "35d0b0beb06930e444a1c0fd12078a40c501dcf7cfc7ca416e73a02108386a154cfef3c8d7e783ea6a31792369340c63289b0cc88ce664ef9d3f6d0fb94826b4",
+      "sha256" : "5358ef5bfe9ea8fad162fe9c4895e5706a92659c34a38bbd91457d902fadcb21",
+      "sha1" : "5326a60b1d786f9c52547368eb0ed4b901a72dcb",
+      "md5" : "e4bf4f74a9e8cce81f54f8499d8bc972"
+    } ]
+  }, {
+    "name" : "runtimeElements",
+    "attributes" : {
+      "org.gradle.category" : "library",
+      "org.gradle.dependency.bundling" : "external",
+      "org.gradle.jvm.environment" : "standard-jvm",
+      "org.gradle.jvm.version" : "11",
+      "org.gradle.libraryelements" : "jar",
+      "org.gradle.usage" : "java-runtime",
+      "org.jetbrains.kotlin.platform.type" : "jvm"
+    },
+    "dependencies" : [ {
+      "group" : "org.jetbrains.kotlin",
+      "module" : "kotlin-stdlib",
+      "version" : {
+        "requires" : "2.4.0"
+      }
+    }, {
+      "group" : "org.ow2.asm",
+      "module" : "asm",
+      "version" : {
+        "requires" : "9.9.1"
+      }
+    }, {
+      "group" : "org.ow2.asm",
+      "module" : "asm-tree",
+      "version" : {
+        "requires" : "9.9.1"
+      }
+    }, {
+      "group" : "com.github.vidstige",
+      "module" : "jadb",
+      "version" : {
+        "requires" : "v1.2.1"
+      }
+    } ],
+    "files" : [ {
+      "name" : "gradle-master-SNAPSHOT.jar",
+      "url" : "gradle-master-SNAPSHOT.jar",
+      "size" : 95126,
+      "sha512" : "35d0b0beb06930e444a1c0fd12078a40c501dcf7cfc7ca416e73a02108386a154cfef3c8d7e783ea6a31792369340c63289b0cc88ce664ef9d3f6d0fb94826b4",
+      "sha256" : "5358ef5bfe9ea8fad162fe9c4895e5706a92659c34a38bbd91457d902fadcb21",
+      "sha1" : "5326a60b1d786f9c52547368eb0ed4b901a72dcb",
+      "md5" : "e4bf4f74a9e8cce81f54f8499d8bc972"
+    } ]
+  } ]
+}

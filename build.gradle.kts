@@ -8,8 +8,7 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-        // Shitpack repo which contains our tools and dependencies
-        maven("https://jitpack.io")
+        maven { url = uri("${rootDir}/maven-local") }
     }
 
     dependencies {
@@ -24,7 +23,7 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        maven("https://jitpack.io")
+        maven { url = uri("${rootDir}/maven-local") }
     }
 }
 
