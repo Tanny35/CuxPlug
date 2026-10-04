@@ -224,17 +224,24 @@ class AnimesamaProvider : MainAPI() {
         val links = data.removePrefix(" ").split(" ")
 
         for (link in links) {
-            if (loadExtractor(link, subtitleCallback, callback)) continue
+            var found = false
+            val track: (ExtractorLink) -> Unit = { found = true; callback(it) }
+            val host = Regex("""^https?://[^/]+""").find(link)?.value
 
-            // Unknown host: these players rotate domains, so guess the player from the link shape.
-            val host = Regex("""^https?://[^/]+""").find(link)?.value ?: continue
             try {
-                when {
-                    // VOE-like: https://<random-domain>/e/<id>
-                    "/e/" in link -> VoeMirror(host).getUrl(link, "$mainUrl/", subtitleCallback, callback)
-                    // JWPlayer-like: https://<domain>/embed-<id>.html
-                    Regex("""/embed-[^/]+\.html""").containsMatchIn(link) -> jwPlayerSources(link, host, callback)
-                }
+                // JWPlayer-like: https://<domain>/embed-<id>.html. Read it directly: loadExtractor
+                // can wrongly hand an unknown domain to a dead extractor with a similar name.
+                if (host != null && Regex("""/embed-[^/]+\.html""").containsMatchIn(link))
+                    jwPlayerSources(link, host, track)
+                if (found) continue
+
+                loadExtractor(link, subtitleCallback, track)
+                if (found) continue
+
+                // Unknown host: these players rotate domains, so guess the player from the link shape.
+                // VOE-like: https://<random-domain>/e/<id>
+                if (host != null && "/e/" in link)
+                    VoeMirror(host).getUrl(link, "$mainUrl/", subtitleCallback, track)
             } catch (e: CancellationException) {
                 throw e
             } catch (_: Exception) {
